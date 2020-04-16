@@ -15,9 +15,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "MyDBName.db";
     public static final String MHS_TABLE_NAME = "mahasiswa";
     public static final String MHS_COLUMN_ID = "id";
-    public static final String MHS_COLUMN_NIM = "nim";
     public static final String MHS_COLUMN_NAMA = "nama";
     public static final String MHS_COLUMN_PHONE = "phone";
+    public static final String MHS_COLUMN_EMAIL = "email";
+    public static final String MHS_COLUMN_ADDRESS = "address";
 
     private HashMap hp;
 
@@ -30,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table mahasiswa " +
-                        "(id integer primary key, nim text,nama text,phone text)"
+                        "(id integer primary key, nim text,nama text,phone text,email text,address text)"
         );
     }
 
@@ -42,14 +43,15 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertContact(String nim, String nama, String
-            phone) {
+    public boolean insertContact(String nama, String phone, String email, String address) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("nim", nim);
         contentValues.put("nama", nama);
         contentValues.put("phone", phone);
+        contentValues.put("email", email);
+        contentValues.put("address", address);
+
         db.insert("mahasiswa", null, contentValues);
         return true;
     }
@@ -67,13 +69,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateContact(String id, String nim, String nama, String phone) {
+    public boolean updateContact(String id, String nama, String phone, String email, String address) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("nim", nim);
         contentValues.put("nama", nama);
         contentValues.put("phone", phone);
+        contentValues.put("email", email);
+        contentValues.put("address", address);
 
         db.update("mahasiswa", contentValues, MHS_COLUMN_ID + "=" + id, null);
         return true;
